@@ -5,23 +5,34 @@ import math
 
 class Eel:
     def __init__(self, x, y, color=(0, 200, 100), radius=20, speed=0.02):
+        """
+        Eel's property
+        :param x: position
+        :param y: position
+        :param color:
+        :param radius: size
+        :param speed:
+        """
         self.x = x
         self.y = y
         self.color = color
         self.radius = radius
         self.speed = speed
 
+        # A random initial movement direction
         angle = random.uniform(0, 2 * math.pi)
         self.dx = math.cos(angle)
         self.dy = math.sin(angle)
 
-        self.electric_field_radius = 80  # 电场半径
-        self.electric_field_color = (0, 255, 255, 80)  # RGBA 带透明度
+        self.electric_field_radius = 80  # Electric field radius
+        self.electric_field_color = (0, 255, 255, 80)  # RGBA with transparency
 
+    # movement
     def move(self):
         self.x += self.dx * self.speed
         self.y += self.dy * self.speed
 
+    # The small changes in direction make the electric eel look like it is "swimming randomly."
     def small_random_turn(self, max_angle_deg=20):
         current_angle = math.atan2(self.dy, self.dx)
         delta_angle = math.radians(random.uniform(-max_angle_deg, max_angle_deg))
@@ -29,14 +40,17 @@ class Eel:
         self.dx = math.cos(new_angle)
         self.dy = math.sin(new_angle)
 
+    # After hitting the left and right boundaries, it bounces back (in the opposite direction of x) and performs a slight steering perturbation.
     def bounce_horizontal(self):
         self.dx *= -1
         self.small_random_turn()
 
+    # After hitting the left and right boundaries, it bounces back (in the opposite direction of y) and performs a slight steering perturbation.
     def bounce_vertical(self):
         self.dy *= -1
         self.small_random_turn()
 
+    # Make sure the eel doesn't swim off the screen.
     def check_screen_bounds(self, width, height):
         if self.x - self.radius < 0:
             self.x = self.radius
@@ -52,6 +66,7 @@ class Eel:
             self.y = height - self.radius
             self.bounce_vertical()
 
+    # Determine whether the electric eel has entered the wall and channel area, and bounce back as long as it enters the horizontal range of the wall.
     def check_wall_collision(self, wall_x, gap_top, gap_bottom, line_width):
         wall_left = wall_x - line_width / 2
         wall_right = wall_x + line_width / 2
@@ -88,7 +103,7 @@ class Eel:
         return same_side
 
     def draw(self, screen):
-        # 画电场（透明圆圈）
+        # draw electric field
         electric_surface = pygame.Surface((self.electric_field_radius * 2, self.electric_field_radius * 2),
                                           pygame.SRCALPHA)
         pygame.draw.circle(
@@ -99,5 +114,5 @@ class Eel:
         )
         screen.blit(electric_surface, (self.x - self.electric_field_radius, self.y - self.electric_field_radius))
 
-        # 画鳗鱼主体（圆形）
+        # Draw eel object
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)

@@ -32,19 +32,21 @@ class Player:
         if next_y - self.radius < 0 or next_y + self.radius > height:
             dy = 0
 
-        # 墙体限制：只能通过通道
+        # 墙体限制
         if wall_x is not None:
             wall_left = wall_x - line_width // 2
             wall_right = wall_x + line_width // 2
             gap_top_safe = gap_top
             gap_bottom_safe = gap_bottom
 
-            in_wall_x = wall_left - self.radius < next_x < wall_right + self.radius
-            in_gap_y = gap_top_safe < next_y < gap_bottom_safe
+            next_x_wall = wall_left - self.radius < next_x < wall_right + self.radius
+            next_y_gap = gap_top_safe < next_y < gap_bottom_safe
 
-            # 如果试图穿墙，且不在通道范围内 -> 阻止移动
-            if in_wall_x and not in_gap_y:
+            # 如果下一帧的位置进入墙体但不在 gap 内，则禁止该方向的移动
+            if next_x_wall and not next_y_gap:
                 dx = 0
+            if next_x_wall and not next_y_gap:
+                dy = 0  # 关键补充：防止斜向进入墙体
 
         self.x += dx
         self.y += dy

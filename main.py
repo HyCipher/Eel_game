@@ -2,7 +2,7 @@
 
 from env.canvas import Canvas
 import pygame
-import env.canvas as canvas
+from interaction.fish_catching import handle_player_fish_interactions
 from obj.player import Player
 
 
@@ -17,7 +17,6 @@ def run(canvas):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
         canvas.screen.fill(canvas.background_color)
 
         canvas.wall.draw(canvas.screen)
@@ -27,6 +26,9 @@ def run(canvas):
         # --- Player update & draw ---
         player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
         player.draw(canvas.screen)
+
+        # 处理 player 和 fish 的交互（抓鱼）
+        handle_player_fish_interactions(player, [canvas.left_fishes, canvas.right_fishes])
 
         # --- Fishes ---
         # Fish in left pool
