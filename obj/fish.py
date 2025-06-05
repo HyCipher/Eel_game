@@ -15,6 +15,7 @@ class Fish:
         angle = random.uniform(0, 2 * math.pi)
         self.dx = math.cos(angle)
         self.dy = math.sin(angle)
+        self.slow_timer = 0
 
     def move(self):
         self.x += self.dx * self.speed
@@ -71,19 +72,35 @@ class Fish:
                     self.x = wall_right + r
                 self.bounce_horizontal()
 
-    def update(self, width, height, wall_x=None, gap_top=None, gap_bottom=None):
+    def avoid_player(self, player, min_distance=80):
+        dx = self.x - player.x
+        dy = self.y - player.y
+        distance = math.hypot(dx, dy)
+
+        if distance < min_distance and distance > 0:
+            # 逃离方向为远离 player
+            angle = math.atan2(dy, dx)
+            self.dx = math.cos(angle)
+            self.dy = math.sin(angle)
+
+            # 加一点扰动以避免僵直
+            self.small_random_turn(max_angle_deg=10)
+
+    def update(self, width, height, wall_x=None, gap_top=None, gap_bottom=None, player=None):
+        if player:
+            self.avoid_player(player)
+        elif random.random() < 0.01:
+            self.small_random_turn()
+
         self.move()
         self.check_screen_bounds(width, height)
         self.check_wall_collision(wall_x, gap_top, gap_bottom)
 
         # 电场减速恢复逻辑
-        if hasattr(self, 'slow_timer') and self.slow_timer > 0:
+        if self.slow_timer > 0:
             self.slow_timer -= 1
             if self.slow_timer == 0:
                 self.speed = self.base_speed
-
-        if random.random() < 0.01:
-            self.small_random_turn()
 
     def react_to_electric_field(self):
         self.speed = self.base_speed * 0.3

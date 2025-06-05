@@ -25,19 +25,22 @@ def run(canvas):
         wall_x, gap_top, gap_bottom = canvas.wall.get_gap_bounds()
 
         # --- Player update & draw ---
-        player.update(canvas.width, canvas.height)
+        player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
         player.draw(canvas.screen)
 
         # --- Fishes ---
+        # Fish in left pool
         for fish in canvas.left_fishes:
-            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom)
+            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
             fish.draw(canvas.screen)
 
+        # Fish in right pool
         for fish in canvas.right_fishes:
-            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom)
+            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
             fish.draw(canvas.screen)
 
         # --- Eels ---
+        # Eels in left and right
         for eel in canvas.left_eels + canvas.right_eels:
             eel.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
             eel.draw(canvas.screen)
