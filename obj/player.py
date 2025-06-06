@@ -1,7 +1,7 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y, color=(255, 0, 0), radius=10, speed=0.08):
+    def __init__(self, x, y, color=(255, 0, 0), radius=10, speed=0.1):
         self.x = x
         self.y = y
         self.color = color

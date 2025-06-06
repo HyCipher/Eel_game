@@ -4,7 +4,7 @@ import math
 
 
 class Fish:
-    def __init__(self, x, y, color=(0, 0, 255), radius=10, speed=0.05):
+    def __init__(self, x, y, color=(0, 0, 255), radius=10, speed=0.10):
         self.x = x
         self.y = y
         self.color = color
@@ -77,7 +77,7 @@ class Fish:
         dy = self.y - player.y
         distance = math.hypot(dx, dy)
 
-        if distance < min_distance and distance > 0:
+        if min_distance > distance > 0:
             # 逃离方向为远离 player
             angle = math.atan2(dy, dx)
             self.dx = math.cos(angle)
@@ -87,9 +87,13 @@ class Fish:
             self.small_random_turn(max_angle_deg=10)
 
     def update(self, width, height, wall_x=None, gap_top=None, gap_bottom=None, player=None):
-        if player:
-            self.avoid_player(player)
-        elif random.random() < 0.01:
+        # 回避player逻辑
+        # if player:
+        #     self.avoid_player(player)
+        # elif random.random() < 0.01:
+        #     self.small_random_turn()
+
+        if random.random() < 0.01:
             self.small_random_turn()
 
         self.move()

@@ -24,7 +24,7 @@ class Eel:
         self.dx = math.cos(angle)
         self.dy = math.sin(angle)
 
-        self.electric_field_radius = 80  # Electric field radius
+        self.electric_field_radius = 160  # Electric field radius
         self.electric_field_color = (0, 255, 255, 80)  # RGBA with transparency
 
     # movement
@@ -83,12 +83,13 @@ class Eel:
             self.bounce_horizontal()
 
     def update(self, width, height, wall_x=None, gap_top=None, gap_bottom=None, line_width=None):
-        self.move()
-        self.check_screen_bounds(width, height)
-        if wall_x is not None and gap_top is not None and gap_bottom is not None and line_width is not None:
-            self.check_wall_collision(wall_x, gap_top, gap_bottom, line_width)
-        if random.random() < 0.01:
-            self.small_random_turn()
+        # self.move()
+        # self.check_screen_bounds(width, height)
+        # if wall_x is not None and gap_top is not None and gap_bottom is not None and line_width is not None:
+        #     self.check_wall_collision(wall_x, gap_top, gap_bottom, line_width)
+        # if random.random() < 0.01:
+        #     self.small_random_turn()
+        pass  # Do nothing, just keep the position and electric field plotted
 
     def affects(self, fish, wall_x):
         # 计算两者距离
