@@ -2,7 +2,7 @@
 
 from env.canvas import Canvas
 import pygame
-from interaction.fish_catching import check_eel_activation
+import interaction.fish_catching as ifc
 from obj.player import Player
 
 
@@ -27,17 +27,6 @@ def run(canvas):
         player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
         player.draw(canvas.screen)
 
-        # Eel捕获逻辑
-        all_fishes = canvas.left_fishes + canvas.right_fishes
-        all_eels = canvas.left_eels + canvas.right_eels
-        captured = check_eel_activation(player, all_eels, all_fishes, wall_x)
-
-        for fish in captured:
-            if fish in canvas.left_fishes:
-                canvas.left_fishes.remove(fish)
-            elif fish in canvas.right_fishes:
-                canvas.right_fishes.remove(fish)
-
         # --- Fishes ---
         # Fish in left pool
         for fish in canvas.left_fishes:
@@ -59,6 +48,22 @@ def run(canvas):
             for fish in canvas.left_fishes + canvas.right_fishes:
                 if eel.affects(fish, wall_x):
                     fish.react_to_electric_field(eel.slow_factor)
+
+        # Eel捕获逻辑
+        all_fishes = canvas.left_fishes + canvas.right_fishes
+        all_eels = canvas.left_eels + canvas.right_eels
+        captured = ifc.check_eel_activation(player, all_eels, all_fishes, wall_x)
+
+        if captured:
+            # 先从鱼池中移除被捕获的鱼
+            for fish in captured:
+                if fish in canvas.left_fishes:
+                    canvas.left_fishes.remove(fish)
+                elif fish in canvas.right_fishes:
+                    canvas.right_fishes.remove(fish)
+
+            # 然后立即结束游戏
+            ifc.handle_game_over(captured)
 
         pygame.display.flip()
 

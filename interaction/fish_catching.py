@@ -1,16 +1,27 @@
 # interaction.py
 import math
+import pygame
+
+
+def handle_game_over(captured_fishes):
+    """
+    game over
+    :param captured_fishes:
+    :return:
+    """
+    print(f"Game Over! You captured {len(captured_fishes)} fish.")
+    pygame.quit()
+    exit()
 
 def check_collision(x1, y1, r1, x2, y2, r2):
     """判断两个圆形是否碰撞"""
     distance = math.hypot(x1 - x2, y1 - y2)
     return distance < (r1 + r2)
 
-
 def check_eel_activation(player, eels, fishes, wall_x):
     """
     玩家碰到鳗鱼时，捕获该鳗鱼电场内的所有鱼。
-
+    When the player encounters an eel, capture all fish within the eel's electric field.
     参数：
         player: Player 对象
         eels: list of Eel 对象
