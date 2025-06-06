@@ -2,7 +2,7 @@
 
 from env.canvas import Canvas
 import pygame
-from interaction.fish_catching import handle_player_fish_interactions
+from interaction.fish_catching import check_eel_activation
 from obj.player import Player
 
 
@@ -27,8 +27,16 @@ def run(canvas):
         player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
         player.draw(canvas.screen)
 
-        # 处理 player 和 fish 的交互（抓鱼）
-        handle_player_fish_interactions(player, [canvas.left_fishes, canvas.right_fishes])
+        # Eel捕获逻辑
+        all_fishes = canvas.left_fishes + canvas.right_fishes
+        all_eels = canvas.left_eels + canvas.right_eels
+        captured = check_eel_activation(player, all_eels, all_fishes, wall_x)
+
+        for fish in captured:
+            if fish in canvas.left_fishes:
+                canvas.left_fishes.remove(fish)
+            elif fish in canvas.right_fishes:
+                canvas.right_fishes.remove(fish)
 
         # --- Fishes ---
         # Fish in left pool
