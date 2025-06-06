@@ -4,7 +4,7 @@ import math
 
 
 class Eel:
-    def __init__(self, x, y, color=(0, 200, 100), radius=20, speed=0.02):
+    def __init__(self, x, y, color=(0, 200, 100), radius=20, speed=0.02, slow_factor=0.3):
         """
         Eel's property
         :param x: position
@@ -18,6 +18,7 @@ class Eel:
         self.color = color
         self.radius = radius
         self.speed = speed
+        self.slow_factor = slow_factor
 
         # A random initial movement direction
         angle = random.uniform(0, 2 * math.pi)

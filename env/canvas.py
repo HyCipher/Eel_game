@@ -33,7 +33,7 @@ class Canvas:
             gap_bottom=gap_bottom,
             line_width=self.line_width,
             radius=10,
-            speed=2,
+            speed=0.5,
         )
 
         self.right_fishes = fish_generate.generate_right_fishes(
@@ -45,7 +45,7 @@ class Canvas:
             gap_bottom=gap_bottom,
             line_width=self.line_width,
             radius=10,
-            speed=0.001
+            speed=0.05
         )
 
         # 初始化 eel

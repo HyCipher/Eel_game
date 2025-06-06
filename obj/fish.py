@@ -106,8 +106,8 @@ class Fish:
             if self.slow_timer == 0:
                 self.speed = self.base_speed
 
-    def react_to_electric_field(self):
-        self.speed = self.base_speed * 0.3
+    def react_to_electric_field(self, slow_factor=0.3):
+        self.speed = self.base_speed * slow_factor
         self.slow_timer = 60  # 电场效果持续帧数
 
     def draw(self, screen):

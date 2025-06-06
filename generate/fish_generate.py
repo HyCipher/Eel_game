@@ -1,7 +1,7 @@
 import random
 from obj.fish import Fish
 
-def generate_left_fishes(count, width, height, wall_x, gap_top, gap_bottom, line_width, radius=10, speed=0.08):
+def generate_left_fishes(count, width, height, wall_x, gap_top, gap_bottom, line_width, radius=10, speed=0.05):
     """
     Generate the fish in left pool
     :param speed:

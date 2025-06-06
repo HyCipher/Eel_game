@@ -58,7 +58,7 @@ def run(canvas):
             # 电场作用检测
             for fish in canvas.left_fishes + canvas.right_fishes:
                 if eel.affects(fish, wall_x):
-                    fish.react_to_electric_field()
+                    fish.react_to_electric_field(eel.slow_factor)
 
         pygame.display.flip()
 
