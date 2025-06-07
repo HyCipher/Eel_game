@@ -52,18 +52,21 @@ def run(canvas):
         # Eel捕获逻辑
         all_fishes = canvas.left_fishes + canvas.right_fishes
         all_eels = canvas.left_eels + canvas.right_eels
-        captured = ifc.check_eel_activation(player, all_eels, all_fishes, wall_x)
 
-        if captured:
-            # 先从鱼池中移除被捕获的鱼
+        result = ifc.check_eel_activation(player, all_eels, all_fishes, wall_x)
+
+        if result:
+            captured, eel_side = result
+
+            # 从对应鱼池中移除
             for fish in captured:
                 if fish in canvas.left_fishes:
                     canvas.left_fishes.remove(fish)
                 elif fish in canvas.right_fishes:
                     canvas.right_fishes.remove(fish)
 
-            # 然后立即结束游戏
-            ifc.handle_game_over(captured)
+            # 结束游戏，并传入 eel 所在侧
+            ifc.handle_game_over(captured, eel_side)
 
         pygame.display.flip()
 
