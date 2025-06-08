@@ -4,6 +4,7 @@ from env.canvas import Canvas
 import pygame
 import interaction.fish_catching as ifc
 from obj.player import Player
+from interaction.eel_config import maybe_swap_eel_properties, is_swapped
 
 
 def run(canvas):
@@ -74,6 +75,7 @@ def run(canvas):
 
 
 def main():
+    maybe_swap_eel_properties()  # 有概率触发对调
     canvas = Canvas()
     run(canvas)
 
