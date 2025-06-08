@@ -21,33 +21,6 @@ def get_eel_properties(eel_side):
     - reward_growth_factor：捕到鱼数量转 reward 概率的增长系数
     - max_reward_probability：奖励概率上限
     """
-    # left_config = {
-    #     'slow_factor': 0.7,
-    #     'reward_growth_factor': 0.25,
-    #     'max_reward_probability': 0.9
-    # }
-    # right_config = {
-    #     'slow_factor': 0.2,
-    #     'reward_growth_factor': 0.15,
-    #     'max_reward_probability': 0.7
-    # }
-    #
-    # _swapped = maybe_swap_eel_properties()
-    #
-    # if _swapped:
-    #     print("yes")
-    #     left_config, right_config = right_config, left_config
-    #
-    # if eel_side == 'left':
-    #     return left_config
-    # elif eel_side == 'right':
-    #     return right_config
-    # else:
-    #     return {
-    #         'slow_factor': 0.1,
-    #         'reward_growth_factor': 0.1,
-    #         'max_reward_probability': 0.5
-    #     }
     if (_swapped and eel_side == 'left') or (not _swapped and eel_side == 'right'):
         # 当前这个 eel 是“快强奖励高”的那一边
         print("对调状态（是否左右互换）:", _swapped)

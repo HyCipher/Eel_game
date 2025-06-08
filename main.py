@@ -1,81 +1,85 @@
-# main.py
-
-from env.canvas import Canvas
 import pygame
+from env.canvas import Canvas
 import interaction.fish_catching as ifc
 from obj.player import Player
-from interaction.eel_config import maybe_swap_eel_properties, is_swapped
+from interaction.eel_config import maybe_swap_eel_properties
+
+MAX_ROUNDS = 10  # 游戏轮数限制
 
 
 def run(canvas):
+    round_count = 0
+
     running = True
 
-    # 初始化
-    player = Player(x=canvas.width // 2, y=canvas.height // 2)
+    while running and round_count < MAX_ROUNDS:
+        maybe_swap_eel_properties()  # 每轮可能对调 eel 的属性
 
+        # 初始化玩家
+        player = Player(x=canvas.width // 2, y=canvas.height // 2)
+        canvas.reset()  # 重置鱼和鳗鱼
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-        canvas.screen.fill(canvas.background_color)
+        round_active = True  # 当前轮是否进行中
 
-        canvas.wall.draw(canvas.screen)
+        while round_active:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    round_active = False
 
-        wall_x, gap_top, gap_bottom = canvas.wall.get_gap_bounds()
+            canvas.screen.fill(canvas.background_color)
+            canvas.wall.draw(canvas.screen)
+            wall_x, gap_top, gap_bottom = canvas.wall.get_gap_bounds()
 
-        # --- Player update & draw ---
-        player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
-        player.draw(canvas.screen)
+            # 玩家更新与绘制
+            player.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
+            player.draw(canvas.screen)
 
-        # --- Fishes ---
-        # Fish in left pool
-        for fish in canvas.left_fishes:
-            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
-            fish.draw(canvas.screen)
+            # 更新并绘制鱼
+            for fish in canvas.left_fishes:
+                fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
+                fish.draw(canvas.screen)
+            for fish in canvas.right_fishes:
+                fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
+                fish.draw(canvas.screen)
 
-        # Fish in right pool
-        for fish in canvas.right_fishes:
-            fish.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, player)
-            fish.draw(canvas.screen)
+            # 更新并绘制鳗鱼
+            for eel in canvas.left_eels + canvas.right_eels:
+                eel.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
+                eel.draw(canvas.screen)
 
-        # --- Eels ---
-        # Eels in left and right
-        for eel in canvas.left_eels + canvas.right_eels:
-            eel.update(canvas.width, canvas.height, wall_x, gap_top, gap_bottom, canvas.line_width)
-            eel.draw(canvas.screen)
+                # 电场作用
+                for fish in canvas.left_fishes + canvas.right_fishes:
+                    if eel.affects(fish, wall_x):
+                        fish.react_to_electric_field(eel.slow_factor)
 
-            # 电场作用检测
-            for fish in canvas.left_fishes + canvas.right_fishes:
-                if eel.affects(fish, wall_x):
-                    fish.react_to_electric_field(eel.slow_factor)
+            # 检查 eel 激活（玩家是否触碰 eel）
+            all_fishes = canvas.left_fishes + canvas.right_fishes
+            all_eels = canvas.left_eels + canvas.right_eels
+            result = ifc.check_eel_activation(player, all_eels, all_fishes, wall_x)
 
-        # Eel捕获逻辑
-        all_fishes = canvas.left_fishes + canvas.right_fishes
-        all_eels = canvas.left_eels + canvas.right_eels
+            if result:
+                captured, eel_side = result
 
-        result = ifc.check_eel_activation(player, all_eels, all_fishes, wall_x)
+                # 移除捕获的鱼
+                for fish in captured:
+                    if fish in canvas.left_fishes:
+                        canvas.left_fishes.remove(fish)
+                    elif fish in canvas.right_fishes:
+                        canvas.right_fishes.remove(fish)
 
-        if result:
-            captured, eel_side = result
+                # 显示游戏结果
+                ifc.handle_game_over(captured, eel_side)
 
-            # 从对应鱼池中移除
-            for fish in captured:
-                if fish in canvas.left_fishes:
-                    canvas.left_fishes.remove(fish)
-                elif fish in canvas.right_fishes:
-                    canvas.right_fishes.remove(fish)
+                round_active = False  # 当前轮结束
+                round_count += 1      # 进入下一轮
 
-            # 结束游戏，并传入 eel 所在侧
-            ifc.handle_game_over(captured, eel_side)
-
-        pygame.display.flip()
+            pygame.display.flip()
 
     canvas.close()
 
 
 def main():
-    maybe_swap_eel_properties()  # 有概率触发对调
     canvas = Canvas()
     run(canvas)
 

@@ -20,8 +20,10 @@ class Canvas:
 
         self.wall = Wall(self.width, self.height, self.line_width, self.gap_height, self.line_color)
 
-        # 调用独立的生成鱼方法
-        # 获取中间墙体和通道上下边界的坐标
+        self.reset_entities()
+
+    def reset_entities(self):
+        # 获取墙的位置和通道上下边界
         wall_x, gap_top, gap_bottom = self.wall.get_gap_bounds()
 
         self.left_fishes = fish_generate.generate_left_fishes(
@@ -67,6 +69,8 @@ class Canvas:
             radius=15
         )
 
+    def reset(self):
+        self.reset_entities()
+
     def close(self):
         pygame.quit()
-        sys.exit()

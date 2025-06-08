@@ -3,16 +3,6 @@ from obj.eel import Eel
 
 
 def generate_left_eels(count, width, height, wall_x, line_width, radius):
-    """
-    generate the eel in left pool
-    :param count: the number of eels to generate
-    :param width: canvas
-    :param height:
-    :param wall_x:
-    :param line_width:
-    :param radius:
-    :return:
-    """
     eels = []
 
     # 左边鱼池范围
@@ -29,16 +19,6 @@ def generate_left_eels(count, width, height, wall_x, line_width, radius):
 
 
 def generate_right_eels(count, width, height, wall_x, line_width, radius):
-    """
-    generate the eel in right pool
-    :param count:
-    :param width:
-    :param height:
-    :param wall_x:
-    :param line_width:
-    :param radius:
-    :return:
-    """
     eels = []
 
     # 右边鱼池范围
