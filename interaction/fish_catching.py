@@ -3,7 +3,6 @@ import math
 from utils.logger import log_game_round
 from interaction.reward import evaluate_reward
 
-
 def handle_game_over(captured_fishes, eel_side, round_number):
     fish_count = len(captured_fishes)
     print(f"Round {round_number} Over! You captured {fish_count} fish from the {eel_side} eel")

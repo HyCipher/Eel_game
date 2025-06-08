@@ -3,6 +3,7 @@ from env.canvas import Canvas
 import interaction.fish_catching as ifc
 from obj.player import Player
 from interaction.eel_config import maybe_swap_eel_properties
+from utils.logger import log_game_round
 
 MAX_ROUNDS = 10  # 游戏轮数限制
 

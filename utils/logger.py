@@ -2,7 +2,9 @@
 import os
 from datetime import datetime
 
-LOG_FILE = "game_log.txt"
+os.makedirs("logs", exist_ok=True)
+timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
+LOG_FILE = f"logs/log_{timestamp}.txt"
 
 def log_game_round(round_number, eel_side, captured_count, got_reward, eel_config):
     time_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
