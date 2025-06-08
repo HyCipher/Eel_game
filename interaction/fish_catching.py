@@ -1,20 +1,23 @@
 # interaction.py
 import math
-import pygame
+from utils.logger import log_game_round
 from interaction.reward import evaluate_reward
 
 
-def handle_game_over(captured_fishes, eel_side):
+def handle_game_over(captured_fishes, eel_side, round_number):
     fish_count = len(captured_fishes)
-    print(f"Game Over! You captured {fish_count} fish from the {eel_side} eel")
+    print(f"Round {round_number} Over! You captured {fish_count} fish from the {eel_side} eel")
 
-    if evaluate_reward(fish_count, eel_side):
+    got_reward, config = evaluate_reward(fish_count, eel_side)
+
+    if got_reward:
         print("🎉 You received a reward!")
     else:
         print("No reward this time. Try again!")
 
-    pygame.quit()
-    exit()
+    # ✅ 写入日志
+    log_game_round(round_number, eel_side, fish_count, got_reward, config)
+
 
 def check_collision(x1, y1, r1, x2, y2, r2):
     """判断两个圆形是否碰撞"""

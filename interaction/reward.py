@@ -24,4 +24,5 @@ def evaluate_reward(captured_fish_count, eel_side):
     probability = min(captured_fish_count * growth_factor, max_probability)
     print(f"reliability = {probability}")
     got_reward = random.random() < probability
-    return got_reward
+
+    return got_reward, config

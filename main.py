@@ -69,7 +69,7 @@ def run(canvas):
                         canvas.right_fishes.remove(fish)
 
                 # 显示游戏结果
-                ifc.handle_game_over(captured, eel_side)
+                ifc.handle_game_over(captured, eel_side, round_count + 1)
 
                 round_active = False  # 当前轮结束
                 round_count += 1      # 进入下一轮
