@@ -1,8 +1,9 @@
 import pygame
 from env.canvas import Canvas
 import interaction.fish_catching as ifc
+import interaction.eel_config as iec
 from obj.player import Player
-from interaction.eel_config import maybe_swap_eel_properties
+from interaction.eel_config import maybe_swap_eel_properties, is_swapped
 from utils.logger import log_game_round
 
 MAX_ROUNDS = 10  # 游戏轮数限制
@@ -14,7 +15,8 @@ def run(canvas):
     running = True
 
     while running and round_count < MAX_ROUNDS:
-        maybe_swap_eel_properties()  # 每轮可能对调 eel 的属性
+        # 每轮可能对调 eel 的属性
+        swapped = maybe_swap_eel_properties()
 
         # 初始化玩家
         player = Player(x=canvas.width // 2, y=canvas.height // 2)
@@ -69,8 +71,21 @@ def run(canvas):
                     elif fish in canvas.right_fishes:
                         canvas.right_fishes.remove(fish)
 
+                # 根据捕获数判定是否给奖励
+                got_reward = ifc.evaluate_reward(len(captured), eel_side)
+
+                # 日志记录
+                log_game_round(
+                    round_number=round_count + 1,
+                    eel_side=eel_side,
+                    captured_count=len(captured),
+                    got_reward=got_reward,
+                    eel_config=iec.get_eel_properties(eel_side),
+                    swapped=is_swapped()  # 记录是否对调
+                )
+
                 # 显示游戏结果
-                ifc.handle_game_over(captured, eel_side, round_count + 1)
+                ifc.handle_game_over(captured, eel_side, round_count + 1, swapped)
 
                 round_active = False  # 当前轮结束
                 round_count += 1      # 进入下一轮
