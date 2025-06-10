@@ -1,6 +1,5 @@
 # interaction.py
 import math
-from utils.logger import log_game_round
 from interaction.reward import evaluate_reward
 
 
@@ -14,9 +13,6 @@ def handle_game_over(captured_fishes, eel_side, round_number, is_swapped):
         print("🎉 You received a reward!")
     else:
         print("No reward this time. Try again!")
-
-    # ✅ 写入日志
-    # log_game_round(round_number, eel_side, fish_count, got_reward, config,  swapped=is_swapped)
 
 
 def check_collision(x1, y1, r1, x2, y2, r2):

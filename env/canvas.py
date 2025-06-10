@@ -1,6 +1,5 @@
 import pygame
 from env.wall import Wall
-import sys
 from generate import fish_generate
 from generate import eel_generate
 
