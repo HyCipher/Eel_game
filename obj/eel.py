@@ -14,10 +14,10 @@ class Eel:
 
     def __init__(
         self, x, y,
+        slow_factor=None,
         color=None,
         radius=None,
         speed=None,
-        slow_factor=None,
         electric_field_radius=None,
         electric_field_color=None
     ):

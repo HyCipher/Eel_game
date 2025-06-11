@@ -1,4 +1,6 @@
 import random
+
+from interaction.eel_config import get_eel_properties
 from obj.eel import Eel
 
 
@@ -13,7 +15,7 @@ def generate_left_eels(count, width, height, wall_x, line_width, radius):
         # left_eel生成位置
         x = left_pool_x_max // 2
         y = height // 2
-        eels.append(Eel(x, y))
+        eels.append(Eel(x, y, get_eel_properties('left')['slow_factor']))
 
     return eels
 
@@ -29,6 +31,6 @@ def generate_right_eels(count, width, height, wall_x, line_width, radius):
         # right_eel生成位置
         x = (right_pool_x_max - right_pool_x_min) // 2 + right_pool_x_min
         y = height // 2
-        eels.append(Eel(x, y))
+        eels.append(Eel(x, y, get_eel_properties('right')['slow_factor']))
 
     return eels

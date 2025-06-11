@@ -7,18 +7,14 @@ from obj.player import Player
 from interaction.eel_config import maybe_swap_eel_properties, is_swapped
 from utils.logger import log_game_round
 
-MAX_ROUNDS = 10  # 游戏轮数限制
 
+MAX_ROUNDS = 10  # 游戏轮数限制
 
 def run(canvas):
     round_count = 0
     running = True
 
     while running and round_count < MAX_ROUNDS:
-        # 每轮可能对调 eel 的属性
-        # swapped = False
-        if round_count >= 1:
-            swapped = maybe_swap_eel_properties()
 
         # 初始化玩家
         player = Player(x=canvas.width // 2, y=canvas.height // 2)
@@ -76,6 +72,9 @@ def run(canvas):
                 # 结果判定
                 # 根据捕获数判定是否给奖励
                 got_reward = reward.evaluate_reward(len(captured), eel_side)
+
+                # 每轮结束后判断对调 eel 的属性
+                maybe_swap_eel_properties()
 
                 # 日志记录
                 log_game_round(
