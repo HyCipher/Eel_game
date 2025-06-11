@@ -46,10 +46,10 @@ def maybe_swap_eel_properties(mu=0.5, sigma=0.1, swap_threshold=0.5):
         swapped_temp = not swapped_temp
         DEFAULT_EEL_PROPERTIES['left'], DEFAULT_EEL_PROPERTIES['right'] = DEFAULT_EEL_PROPERTIES['right'], DEFAULT_EEL_PROPERTIES['left']
 
-    print(swapped_temp, DEFAULT_EEL_PROPERTIES)
+    # print(swapped_temp, DEFAULT_EEL_PROPERTIES)
+    return swapped_temp
 
-
-def is_swapped():
-    """当前是否处于对调状态"""
+def swapped_reset():
+    """swapped to false"""
     _swapped = False
     return _swapped

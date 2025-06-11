@@ -4,7 +4,7 @@ import interaction.fish_catching as ifc
 import interaction.eel_config as iec
 from interaction import reward
 from obj.player import Player
-from interaction.eel_config import maybe_swap_eel_properties, is_swapped
+from interaction.eel_config import maybe_swap_eel_properties, swapped_reset
 from utils.logger import log_game_round
 
 
@@ -74,7 +74,7 @@ def run(canvas):
                 got_reward = reward.evaluate_reward(len(captured), eel_side)
 
                 # 每轮结束后判断对调 eel 的属性
-                maybe_swap_eel_properties()
+                swapped_state = maybe_swap_eel_properties()
 
                 # 日志记录
                 log_game_round(
@@ -83,11 +83,10 @@ def run(canvas):
                     captured_count=len(captured),
                     got_reward=got_reward,
                     eel_config=iec.get_eel_properties(eel_side),
-                    swapped=is_swapped()  # 记录是否对调
+                    swapped=swapped_state  # 记录是否对调
                 )
 
-                # 显示游戏结果
-                # ifc.handle_game_over(captured, eel_side, round_count + 1, swapped)
+                swapped_reset()
 
                 round_active = False  # 当前轮结束
                 round_count += 1      # 进入下一轮

@@ -1,18 +1,5 @@
 # interaction.py
 import math
-from interaction.reward import evaluate_reward
-
-
-def handle_game_over(captured_fishes, eel_side, round_number, is_swapped):
-    fish_count = len(captured_fishes)
-    print(f"Round {round_number} Over! You captured {fish_count} fish from the {eel_side} eel")
-
-    got_reward, config = evaluate_reward(fish_count, eel_side)
-
-    if got_reward:
-        print("🎉 You received a reward!")
-    else:
-        print("No reward this time. Try again!")
 
 
 def check_collision(x1, y1, r1, x2, y2, r2):
