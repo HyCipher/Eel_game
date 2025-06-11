@@ -5,13 +5,13 @@ import random
 DEFAULT_EEL_PROPERTIES = {
     'left': {
         'slow_factor': 0.2,
-        'reward_growth_factor': 0.15,
-        'max_reward_probability': 0.7  # 初始左鳗鱼概率
+        'reward_growth_factor': 0.25,
+        'max_reward_probability': 0.75
     },
     'right': {
         'slow_factor': 1,
-        'reward_growth_factor': 0.25,
-        'max_reward_probability': 0.9  # 初始右鳗鱼概率
+        'reward_growth_factor': 0.1,
+        'max_reward_probability': 0.3
     }
 }
 
@@ -35,13 +35,14 @@ def get_eel_properties(side):
             return DEFAULT_EEL_PROPERTIES[side]
 
 
-def maybe_swap_eel_properties(mu=0.5, sigma=0.1, swap_threshold=0.5):
+def maybe_swap_eel_properties(mu=0.35, sigma=0.1, swap_threshold=0.5):
     """依据高斯分布决定是否对调属性（严格保持max_prob规则）"""
     global _swapped
     swapped_temp = _swapped
 
     # 决定是否交换
     score = random.gauss(mu, sigma)
+    print(score)
     if score > swap_threshold:
         swapped_temp = not swapped_temp
         DEFAULT_EEL_PROPERTIES['left'], DEFAULT_EEL_PROPERTIES['right'] = DEFAULT_EEL_PROPERTIES['right'], DEFAULT_EEL_PROPERTIES['left']
@@ -52,4 +53,3 @@ def maybe_swap_eel_properties(mu=0.5, sigma=0.1, swap_threshold=0.5):
 def swapped_reset():
     """swapped to false"""
     _swapped = False
-    return _swapped

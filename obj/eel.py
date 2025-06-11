@@ -9,7 +9,7 @@ class Eel:
     default_radius = 20
     default_speed = 0.02
     default_slow_factor = 0.3
-    default_electric_field_radius = 160
+    default_electric_field_radius = 100
     default_electric_field_color = (0, 255, 255, 80)
 
     def __init__(

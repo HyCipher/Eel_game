@@ -11,7 +11,6 @@ def check_collision(x1, y1, r1, x2, y2, r2):
 def check_eel_activation(player, eels, fishes, wall_x):
     """
     玩家碰到鳗鱼时，捕获该鳗鱼电场内的所有鱼，并返回 eel 所在的边。
-
     参数：
         player: Player 对象
         eels: list of Eel 对象
