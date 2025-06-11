@@ -35,15 +35,17 @@ def get_eel_properties(side):
             return DEFAULT_EEL_PROPERTIES[side]
 
 
-def maybe_swap_eel_properties(mu=0.35, sigma=0.1, swap_threshold=0.5):
+# def maybe_swap_eel_properties(mu=0.35, sigma=0.1, swap_threshold=0.5):
+def maybe_swap_eel_properties(swap_prob=0.3):
     """依据高斯分布决定是否对调属性（严格保持max_prob规则）"""
     global _swapped
     swapped_temp = _swapped
 
     # 决定是否交换
-    score = random.gauss(mu, sigma)
-    print(score)
-    if score > swap_threshold:
+    # score = random.gauss(mu, sigma)
+
+    # if score > swap_threshold:
+    if random.random() < swap_prob:
         swapped_temp = not swapped_temp
         DEFAULT_EEL_PROPERTIES['left'], DEFAULT_EEL_PROPERTIES['right'] = DEFAULT_EEL_PROPERTIES['right'], DEFAULT_EEL_PROPERTIES['left']
 
