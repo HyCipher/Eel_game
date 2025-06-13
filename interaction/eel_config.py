@@ -47,8 +47,13 @@ def maybe_swap_eel_properties(swap_prob=0.3):
     # if score > swap_threshold:
     if random.random() < swap_prob:
         swapped_temp = not swapped_temp
-        DEFAULT_EEL_PROPERTIES['left'], DEFAULT_EEL_PROPERTIES['right'] = DEFAULT_EEL_PROPERTIES['right'], DEFAULT_EEL_PROPERTIES['left']
+        DEFAULT_EEL_PROPERTIES['left']['reward_growth_factor'], DEFAULT_EEL_PROPERTIES['right'][
+            'reward_growth_factor'] = DEFAULT_EEL_PROPERTIES['right']['reward_growth_factor'], \
+            DEFAULT_EEL_PROPERTIES['left']['reward_growth_factor']
 
+        DEFAULT_EEL_PROPERTIES['left']['max_reward_probability'], DEFAULT_EEL_PROPERTIES['right'][
+            'max_reward_probability'] = DEFAULT_EEL_PROPERTIES['right']['max_reward_probability'], \
+        DEFAULT_EEL_PROPERTIES['left']['max_reward_probability']
     # print(swapped_temp, DEFAULT_EEL_PROPERTIES)
     return swapped_temp
 

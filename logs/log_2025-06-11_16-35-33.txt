@@ -1,0 +1,10 @@
+[2025-06-11 16:35:49] Round 1 | Side: right | Captured: 0 | Reward: False | SlowFactor: 0.2 | Growth: 0.25 | right_MaxProb: 0.75 | Swapped: True
+[2025-06-11 16:35:53] Round 2 | Side: left | Captured: 1 | Reward: False | SlowFactor: 1 | Growth: 0.1 | left_MaxProb: 0.3 | Swapped: False
+[2025-06-11 16:35:54] Round 3 | Side: right | Captured: 3 | Reward: True | SlowFactor: 1 | Growth: 0.1 | right_MaxProb: 0.3 | Swapped: True
+[2025-06-11 16:35:55] Round 4 | Side: right | Captured: 0 | Reward: False | SlowFactor: 1 | Growth: 0.1 | right_MaxProb: 0.3 | Swapped: False
+[2025-06-11 16:35:56] Round 5 | Side: left | Captured: 1 | Reward: False | SlowFactor: 1 | Growth: 0.1 | left_MaxProb: 0.3 | Swapped: True
+[2025-06-11 16:35:58] Round 6 | Side: right | Captured: 2 | Reward: False | SlowFactor: 0.2 | Growth: 0.25 | right_MaxProb: 0.75 | Swapped: False
+[2025-06-11 16:36:01] Round 7 | Side: right | Captured: 1 | Reward: True | SlowFactor: 0.2 | Growth: 0.25 | right_MaxProb: 0.75 | Swapped: False
+[2025-06-11 16:36:03] Round 8 | Side: right | Captured: 0 | Reward: False | SlowFactor: 1 | Growth: 0.1 | right_MaxProb: 0.3 | Swapped: True
+[2025-06-11 16:36:06] Round 9 | Side: left | Captured: 2 | Reward: False | SlowFactor: 1 | Growth: 0.1 | left_MaxProb: 0.3 | Swapped: True
+[2025-06-11 16:36:08] Round 10 | Side: right | Captured: 5 | Reward: True | SlowFactor: 0.2 | Growth: 0.25 | right_MaxProb: 0.75 | Swapped: False
